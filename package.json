@@ -1,11 +1,27 @@
 {
-  "name": "pptb-plugin-documentation-generator",
+  "name": "@cyco77/pptb-plugin-documentation-generator",
   "version": "0.1.0",
-  "displayName": "plugin-documentation-generator",
+  "displayName": "Plugin Documentation Generator",
   "description": "A Power Platform Tool Box tool to show plugin details and generate documentation.",
   "main": "index.html",
   "author": "Lars Hildebrandt",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cyco77/pptb-plugin-documentation-generator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cyco77/pptb-plugin-documentation-generator/issues"
+  },
+  "homepage": "https://github.com/cyco77/pptb-plugin-documentation-generator#readme",
+  "keywords": [
+    "power-platform",
+    "dynamics-365",
+    "plugin",
+    "documentation",
+    "pptb",
+    "toolbox"
+  ],
   "engines": {
     "node": ">=18.0.0"
   },
