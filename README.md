@@ -385,6 +385,56 @@ Contributions are welcome! Please:
 4. Test the build process
 5. Submit a pull request
 
+### GitHub Actions
+
+The project includes automated CI/CD workflows:
+
+#### CI Workflow (`.github/workflows/ci.yml`)
+
+Runs on every push and pull request to `main` and `develop` branches:
+
+- **Build and Test**:
+
+  - Tests on Node.js 18.x and 20.x
+  - TypeScript type checking
+  - Build verification
+  - Uploads build artifacts
+
+- **Lint Check**:
+
+  - Runs ESLint if configured
+  - Validates code quality
+
+- **Security Audit**:
+
+  - Checks for npm package vulnerabilities
+  - Fails on critical vulnerabilities
+  - Warns on high-severity issues
+
+- **Package Validation**:
+  - Validates package.json structure
+  - Creates npm-shrinkwrap.json
+  - Verifies all required fields
+
+#### Release Workflow (`.github/workflows/release.yml`)
+
+Triggered when pushing a version tag (e.g., `v1.0.0`):
+
+- Builds the project
+- Creates distribution packages (tar.gz and zip)
+- Creates GitHub release with auto-generated notes
+- Attaches build artifacts to release
+
+**To create a release:**
+
+```bash
+# Update version in package.json
+npm version patch  # or minor, major
+
+# Push with tags
+git push origin main --tags
+```
+
 ## License
 
 MIT - See LICENSE file for details
