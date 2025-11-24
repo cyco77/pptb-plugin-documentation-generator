@@ -30,7 +30,9 @@
     "dev": "vite",
     "watch": "vite build --watch",
     "preview": "vite preview",
-    "finalize-package": "npm shrinkwrap"
+    "finalize-package": "npm shrinkwrap",
+    "version": "npm version patch",
+    "publish": "publish"
   },
   "dependencies": {
     "react": "^18.3.1",
