@@ -33,7 +33,8 @@
     "finalize-package": "npm shrinkwrap",
     "release:patch": "npm version patch",
     "release:minor": "npm version minor",
-    "release:major": "npm version major"
+    "release:major": "npm version major",
+    "release:publish": "npm publish"
   },
   "dependencies": {
     "react": "^18.3.1",
