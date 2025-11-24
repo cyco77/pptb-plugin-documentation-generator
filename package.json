@@ -1,6 +1,6 @@
 {
   "name": "@cyco77/pptb-plugin-documentation-generator",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "displayName": "Plugin Documentation Generator",
   "description": "A Power Platform Tool Box tool to show plugin details and generate documentation.",
   "main": "index.html",
@@ -31,7 +31,7 @@
     "watch": "vite build --watch",
     "preview": "vite preview",
     "finalize-package": "npm shrinkwrap",
-    "version": "npm version patch",
+    "version": "version patch",
     "publish": "publish"
   },
   "dependencies": {
