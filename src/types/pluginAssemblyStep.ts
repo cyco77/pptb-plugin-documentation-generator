@@ -7,4 +7,6 @@ export type PluginAssemblyStep = {
   filteringattributes: string;
   sdkMessage: string;
   eventHandler: string;
+  primaryobjecttypecode: string;
+  primaryobjecttypecodeDisplayname: string;
 };

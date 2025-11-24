@@ -131,11 +131,12 @@ export const copyPluginAssemblyStepsAsMarkdown = async (
 function generateCSVContent(steps: PluginAssemblyStep[]): string {
   const headers = [
     "Name",
+    "Event Handler",
     "SDK Message",
+    "Object Type Code",
     "Mode",
     "Stage",
     "Rank",
-    "Event Handler",
     "Filtering Attributes",
   ];
   const csvRows = [headers.join(",")];
@@ -143,11 +144,12 @@ function generateCSVContent(steps: PluginAssemblyStep[]): string {
   steps.forEach((step) => {
     const row = [
       `"${step.name.replace(/"/g, '""')}"`,
+      `"${step.eventHandler.replace(/"/g, '""')}"`,
       `"${step.sdkMessage.replace(/"/g, '""')}"`,
+      `"${step.primaryobjecttypecode.replace(/"/g, '""')}"`,
       `"${step.mode.replace(/"/g, '""')}"`,
       `"${step.stage.replace(/"/g, '""')}"`,
       `"${step.rank}"`,
-      `"${step.eventHandler.replace(/"/g, '""')}"`,
       `"${step.filteringattributes.replace(/"/g, '""')}"`,
     ];
     csvRows.push(row.join(","));
@@ -162,11 +164,12 @@ function generateCSVContent(steps: PluginAssemblyStep[]): string {
 function generateMarkdownContent(steps: PluginAssemblyStep[]): string {
   const headers = [
     "Name",
+    "Event Handler",
     "SDK Message",
+    "Object Type Code",
     "Mode",
     "Stage",
     "Rank",
-    "Event Handler",
     "Filtering Attributes",
   ];
 
@@ -179,11 +182,12 @@ function generateMarkdownContent(steps: PluginAssemblyStep[]): string {
   steps.forEach((step) => {
     const row = [
       step.name.replace(/\|/g, "\\|"),
+      step.eventHandler.replace(/\|/g, "\\|"),
       step.sdkMessage.replace(/\|/g, "\\|"),
+      step.primaryobjecttypecode.replace(/\|/g, "\\|"),
       step.mode.replace(/\|/g, "\\|"),
       step.stage.replace(/\|/g, "\\|"),
       step.rank.toString(),
-      step.eventHandler.replace(/\|/g, "\\|"),
       step.filteringattributes.replace(/\|/g, "\\|"),
     ];
     markdown += `| ${row.join(" | ")} |\n`;

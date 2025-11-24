@@ -1,11 +1,11 @@
 {
-  "name": "pptb-plugin-documentation-generator",
+  "name": "@cyco77/pptb-plugin-documentation-generator",
   "version": "0.1.0",
   "lockfileVersion": 3,
   "requires": true,
   "packages": {
     "": {
-      "name": "pptb-plugin-documentation-generator",
+      "name": "@cyco77/pptb-plugin-documentation-generator",
       "version": "0.1.0",
       "license": "MIT",
       "dependencies": {

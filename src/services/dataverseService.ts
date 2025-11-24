@@ -12,7 +12,7 @@ export const loadPluginAssemblies = async (): Promise<PluginAssembly[]> => {
 };
 
 export const loadPluginSdkSteps = async (pluginAssemblyId: string) => {
-  let url = `sdkmessageprocessingsteps?$select=filteringattributes,mode,name,rank,stage&$expand=eventhandler_plugintype($select=name,typename),sdkmessageid($select=name)&$filter=(eventhandler_plugintype/_pluginassemblyid_value eq ${pluginAssemblyId}) and (sdkmessageid/sdkmessageid ne null)`;
+  let url = `sdkmessageprocessingsteps?$select=filteringattributes,mode,name,rank,stage&$expand=eventhandler_plugintype($select=name,typename),sdkmessageid($select=name),sdkmessagefilterid($select=name,primaryobjecttypecode)&$filter=(eventhandler_plugintype/_pluginassemblyid_value eq ${pluginAssemblyId}) and (sdkmessageid/sdkmessageid ne null)`;
 
   const allRecords = await loadAllData(url);
 

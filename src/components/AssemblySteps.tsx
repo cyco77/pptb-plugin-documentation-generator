@@ -39,6 +39,24 @@ const columns: TableColumnDefinition<PluginAssemblyStep>[] = [
   }),
 
   createTableColumn<PluginAssemblyStep>({
+    columnId: "eventHandler",
+    compare: (a, b) => {
+      return a.eventHandler.localeCompare(b.eventHandler);
+    },
+    renderHeaderCell: () => {
+      return "EventHandler";
+    },
+
+    renderCell: (item: PluginAssemblyStep) => {
+      return (
+        <span title={item.eventHandler} style={cellStyles}>
+          {item.eventHandler}
+        </span>
+      );
+    },
+  }),
+
+  createTableColumn<PluginAssemblyStep>({
     columnId: "sdkMessage",
     compare: (a, b) => {
       return a.sdkMessage.localeCompare(b.sdkMessage);
@@ -51,6 +69,26 @@ const columns: TableColumnDefinition<PluginAssemblyStep>[] = [
       return (
         <span title={item.sdkMessage} style={cellStyles}>
           {item.sdkMessage}
+        </span>
+      );
+    },
+  }),
+
+  createTableColumn<PluginAssemblyStep>({
+    columnId: "primaryobjecttypecode",
+    compare: (a, b) => {
+      return a.primaryobjecttypecode.localeCompare(b.primaryobjecttypecode);
+    },
+    renderHeaderCell: () => {
+      return "Object Type Code";
+    },
+
+    renderCell: (item: PluginAssemblyStep) => {
+      return (
+        <span title={item.primaryobjecttypecode} style={cellStyles}>
+          {item.primaryobjecttypecodeDisplayname
+            ? `${item.primaryobjecttypecodeDisplayname} (${item.primaryobjecttypecode})`
+            : "-"}
         </span>
       );
     },
@@ -111,24 +149,6 @@ const columns: TableColumnDefinition<PluginAssemblyStep>[] = [
   }),
 
   createTableColumn<PluginAssemblyStep>({
-    columnId: "eventHandler",
-    compare: (a, b) => {
-      return a.eventHandler.localeCompare(b.eventHandler);
-    },
-    renderHeaderCell: () => {
-      return "EventHandler";
-    },
-
-    renderCell: (item: PluginAssemblyStep) => {
-      return (
-        <span title={item.eventHandler} style={cellStyles}>
-          {item.eventHandler}
-        </span>
-      );
-    },
-  }),
-
-  createTableColumn<PluginAssemblyStep>({
     columnId: "filteringattributes",
     compare: (a, b) => {
       return a.filteringattributes.localeCompare(b.name);
@@ -175,9 +195,17 @@ export const AssemblySteps = (props: IAssemblyStepsProps): JSXElement => {
       idealWidth: 400,
       minWidth: 150,
     },
+    eventHandler: {
+      idealWidth: 350,
+      minWidth: 150,
+    },
     sdkMessage: {
       idealWidth: 150,
       minWidth: 100,
+    },
+    primaryobjecttypecode: {
+      idealWidth: 350,
+      minWidth: 250,
     },
     mode: {
       idealWidth: 120,
@@ -191,10 +219,7 @@ export const AssemblySteps = (props: IAssemblyStepsProps): JSXElement => {
       idealWidth: 120,
       minWidth: 80,
     },
-    eventHandler: {
-      idealWidth: 350,
-      minWidth: 150,
-    },
+
     filteringattributes: {
       idealWidth: 200,
       minWidth: 150,
