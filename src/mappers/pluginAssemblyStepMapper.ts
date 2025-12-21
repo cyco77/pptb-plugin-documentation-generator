@@ -12,7 +12,7 @@ export const mapPluginAssemblySteps = (
     ] as string;
     const rank = item["rank"] as number;
     const stage = item[
-      "tage@OData.Community.Display.V1.FormattedValue]"
+      "stage@OData.Community.Display.V1.FormattedValue"
     ] as string;
     const filteringattributes = (item["filteringattributes"] as string) || "";
     const sdkMessage = item["sdkmessageid"] as Record<string, unknown> | null;
