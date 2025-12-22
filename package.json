@@ -1,13 +1,13 @@
 {
   "name": "@cyco77/pptb-plugin-documentation-generator",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "displayName": "Plugin Documentation Generator",
   "description": "A Power Platform Tool Box tool to show plugin details and generate documentation.",
   "main": "index.html",
   "author": "Lars Hildebrandt",
   "contributors": [
     {
-      "name": "YLars Hildebrandt",
+      "name": "Lars Hildebrandt",
       "url": "https://github.com/cyco77"
     }
   ],
