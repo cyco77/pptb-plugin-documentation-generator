@@ -5,7 +5,23 @@
   "description": "A Power Platform Tool Box tool to show plugin details and generate documentation.",
   "main": "index.html",
   "author": "Lars Hildebrandt",
-  "icon": "https://raw.githubusercontent.com/cyco77/pptb-plugin-documentation-generator/refs/heads/main/icon/plugin-documentation_logo.png",
+  "contributors": [
+    {
+      "name": "YLars Hildebrandt",
+      "url": "https://github.com/cyco77"
+    }
+  ],
+  "cspExceptions": {
+    "connect-src": [
+      "https://*.dynamics.com"
+    ]
+  },
+  "configurations": {
+    "repository": "https://raw.githubusercontent.com/cyco77/pptb-plugin-documentation-generator",
+    "website": "https://raw.githubusercontent.com/cyco77/pptb-plugin-documentation-generator",
+    "iconUrl": "https://raw.githubusercontent.com/cyco77/pptb-plugin-documentation-generator/refs/heads/main/icon/plugin-documentation_logo.png",
+    "readmeUrl": "https://raw.githubusercontent.com/cyco77/pptb-plugin-documentation-generator/refs/heads/main/README.md"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
