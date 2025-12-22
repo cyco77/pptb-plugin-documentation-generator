@@ -12,12 +12,7 @@ import {
   copyPluginAssemblyStepsAsCSV,
   copyPluginAssemblyStepsAsMarkdown,
 } from "../utils/exportUtils";
-import {
-  Divider,
-  Button,
-  makeStyles,
-  Spinner,
-} from "@fluentui/react-components";
+import { Button, makeStyles, Spinner } from "@fluentui/react-components";
 import {
   ArrowDownload24Regular,
   Copy24Regular,
@@ -42,6 +37,16 @@ export const Overview: React.FC<IOverviewProps> = ({ connection }) => {
   const [isLoadingAssemblies, setIsLoadingAssemblies] = useState(false);
 
   const useStyles = makeStyles({
+    overviewRoot: {
+      height: "100%",
+      display: "flex",
+      flexDirection: "column",
+      gap: "16px",
+      overflow: "hidden",
+    },
+    filterSection: {
+      flexShrink: 0,
+    },
     filterContainer: {
       display: "flex",
       alignItems: "flex-end",
@@ -57,6 +62,13 @@ export const Overview: React.FC<IOverviewProps> = ({ connection }) => {
       justifyContent: "center",
       alignItems: "center",
       padding: "40px",
+    },
+    stepsSection: {
+      flex: 1,
+      display: "flex",
+      flexDirection: "column",
+      overflow: "hidden",
+      minHeight: 0,
     },
   });
 
@@ -170,13 +182,13 @@ export const Overview: React.FC<IOverviewProps> = ({ connection }) => {
   }, [filteredPluginAssemblySteps, showNotification]);
 
   return (
-    <>
+    <div className={styles.overviewRoot}>
       {isLoadingAssemblies ? (
         <div className={styles.loadingContainer}>
           <Spinner label="Loading plugin assemblies..." />
         </div>
       ) : (
-        <div className="card">
+        <div className={styles.filterSection}>
           <div className={styles.filterContainer}>
             <Filter
               pluginAssemblies={pluginAssemblies}
@@ -223,18 +235,17 @@ export const Overview: React.FC<IOverviewProps> = ({ connection }) => {
         </div>
       )}
 
-      <Divider />
       {isLoadingSteps ? (
         <div className={styles.loadingContainer}>
           <Spinner label="Loading plugin assembly steps..." />
         </div>
       ) : (
         pluginAssemblySteps.length > 0 && (
-          <div className="card">
+          <div className={styles.stepsSection}>
             <AssemblySteps items={filteredPluginAssemblySteps} />
           </div>
         )
       )}
-    </>
+    </div>
   );
 };

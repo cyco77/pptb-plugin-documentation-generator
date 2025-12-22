@@ -16,18 +16,19 @@ import {
 import iconImage from "../icon/plugin-documentation_small.png";
 
 const useStyles = makeStyles({
-  root: {
+  container: {
+    backgroundColor: tokens.colorNeutralBackground1,
+    height: "100vh",
     display: "flex",
     flexDirection: "column",
-    backgroundColor: tokens.colorNeutralBackground1,
+    overflow: "hidden",
   },
   header: {
     padding: tokens.spacingVerticalL,
     paddingBottom: tokens.spacingVerticalS,
     borderBottom: `1px solid ${tokens.colorNeutralStroke1}`,
-    display: "flex",
-    flexDirection: "column",
     gap: tokens.spacingVerticalXXS,
+    flexShrink: 0,
   },
   headerTitle: {
     display: "flex",
@@ -43,12 +44,10 @@ const useStyles = makeStyles({
     fontSize: tokens.fontSizeBase300,
   },
   content: {
-    flex: 1,
-    overflow: "auto",
     padding: tokens.spacingVerticalL,
-    display: "flex",
-    flexDirection: "column",
-    gap: tokens.spacingVerticalL,
+    flex: 1,
+    overflow: "hidden",
+    minHeight: 0,
   },
 });
 
@@ -109,23 +108,25 @@ function App() {
   }, []);
 
   return (
-    <FluentProvider theme={theme} className={styles.root}>
-      <div className={styles.header}>
-        <div className={styles.headerTitle}>
-          <img
-            src={iconImage}
-            alt="Plugin Documentation Generator Icon"
-            className={styles.headerIcon}
-          />
-          <Title3>Plugin Documentation Generator</Title3>
-          <Text className={styles.subtitle}>
-            Your tool to generate plugin & pluginstep documentation
-          </Text>
+    <FluentProvider theme={theme}>
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <div className={styles.headerTitle}>
+            <img
+              src={iconImage}
+              alt="Plugin Documentation Generator Icon"
+              className={styles.headerIcon}
+            />
+            <Title3>Plugin Documentation Generator</Title3>
+            <Text className={styles.subtitle}>
+              Your tool to generate plugin & pluginstep documentation
+            </Text>
+          </div>
         </div>
-      </div>
-      <div className={styles.content}>
-        <Overview connection={connection} />
-        {/* <EventLog /> */}
+        <div className={styles.content}>
+          <Overview connection={connection} />
+          {/* <EventLog /> */}
+        </div>
       </div>
     </FluentProvider>
   );
