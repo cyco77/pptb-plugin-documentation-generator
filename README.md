@@ -1,7 +1,7 @@
 # Plugin Documentation Generator
 
 <p align="center">
-  <img src="icon/plugin-documentation_small.png" alt="Plugin Documentation Generator Logo" width="314" height="150">
+  <img src="https://raw.githubusercontent.com/cyco77/pptb-plugin-documentation-generator/main/icon/plugin-documentation_small.png" alt="Plugin Documentation Generator Logo" width="314" height="150">
 </p>
 
 <p align="center">
@@ -12,11 +12,11 @@
 
 ### Dark Theme
 
-![Plugin Documentation Generator - Dark Theme](screenshots/main_dark.png)
+![Plugin Documentation Generator - Dark Theme](https://raw.githubusercontent.com/cyco77/pptb-plugin-documentation-generator/main/screenshots/main_dark.png)
 
 ### Light Theme
 
-![Plugin Documentation Generator - Light Theme](screenshots/main_light.png)
+![Plugin Documentation Generator - Light Theme](https://raw.githubusercontent.com/cyco77/pptb-plugin-documentation-generator/main/screenshots/main_light.png)
 
 ## Features
 
