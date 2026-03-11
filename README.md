@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  A Power Platform Tool Box (PPTB) plugin for viewing and documenting Dynamics 365 plugin assemblies and steps. This tool provides an intuitive interface to explore plugin configurations and export documentation in multiple formats.
+  A Power Platform Toolbox (PPTB) plugin for viewing and documenting Dynamics 365 plugin assemblies and steps. This tool provides an intuitive interface to explore plugin configurations and export documentation in multiple formats.
 </p>
 
 ## Screenshots

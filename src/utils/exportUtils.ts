@@ -5,7 +5,7 @@ import { logger } from "../services/loggerService";
 type ShowNotificationFn = (
   title: string,
   body: string,
-  type: "success" | "info" | "warning" | "error"
+  type: "success" | "info" | "warning" | "error",
 ) => Promise<void>;
 
 /**
@@ -14,7 +14,7 @@ type ShowNotificationFn = (
 export const exportPluginAssemblyStepsToCSV = async (
   steps: PluginAssemblyStep[],
   filter: PluginAssembly | undefined,
-  showNotification?: ShowNotificationFn
+  showNotification?: ShowNotificationFn,
 ): Promise<void> => {
   if (!steps || steps.length === 0) {
     logger.warning("No plugin assembly steps to export");
@@ -25,14 +25,14 @@ export const exportPluginAssemblyStepsToCSV = async (
     const csvContent = generateCSVContent(steps);
     const defaultFilename = `${filter?.name || "plugin"}_assembly_steps.csv`;
 
-    await window.toolboxAPI.utils.saveFile(defaultFilename, csvContent);
+    await window.toolboxAPI.fileSystem.saveFile(defaultFilename, csvContent);
 
     logger.success(`Exported ${steps.length} plugin assembly steps`);
     if (showNotification) {
       await showNotification(
         "Export Successful",
         `Exported ${steps.length} plugin assembly steps to ${defaultFilename}`,
-        "success"
+        "success",
       );
     }
   } catch (error) {
@@ -41,7 +41,7 @@ export const exportPluginAssemblyStepsToCSV = async (
       await showNotification(
         "Export Failed",
         `Error exporting data: ${(error as Error).message}`,
-        "error"
+        "error",
       );
     }
   }
@@ -52,7 +52,7 @@ export const exportPluginAssemblyStepsToCSV = async (
  */
 export const copyPluginAssemblyStepsAsCSV = async (
   steps: PluginAssemblyStep[],
-  showNotification?: ShowNotificationFn
+  showNotification?: ShowNotificationFn,
 ): Promise<void> => {
   if (!steps || steps.length === 0) {
     logger.warning("No plugin assembly steps to copy");
@@ -65,13 +65,13 @@ export const copyPluginAssemblyStepsAsCSV = async (
     await window.toolboxAPI.utils.copyToClipboard(csvContent);
 
     logger.success(
-      `Copied ${steps.length} plugin assembly steps to clipboard (CSV)`
+      `Copied ${steps.length} plugin assembly steps to clipboard (CSV)`,
     );
     if (showNotification) {
       await showNotification(
         "Copy Successful",
         `Copied ${steps.length} plugin assembly steps to clipboard as CSV`,
-        "success"
+        "success",
       );
     }
   } catch (error) {
@@ -80,7 +80,7 @@ export const copyPluginAssemblyStepsAsCSV = async (
       await showNotification(
         "Copy Failed",
         `Error copying to clipboard: ${(error as Error).message}`,
-        "error"
+        "error",
       );
     }
   }
@@ -91,7 +91,7 @@ export const copyPluginAssemblyStepsAsCSV = async (
  */
 export const copyPluginAssemblyStepsAsMarkdown = async (
   steps: PluginAssemblyStep[],
-  showNotification?: ShowNotificationFn
+  showNotification?: ShowNotificationFn,
 ): Promise<void> => {
   if (!steps || steps.length === 0) {
     logger.warning("No plugin assembly steps to copy");
@@ -104,13 +104,13 @@ export const copyPluginAssemblyStepsAsMarkdown = async (
     await window.toolboxAPI.utils.copyToClipboard(markdownContent);
 
     logger.success(
-      `Copied ${steps.length} plugin assembly steps to clipboard (Markdown)`
+      `Copied ${steps.length} plugin assembly steps to clipboard (Markdown)`,
     );
     if (showNotification) {
       await showNotification(
         "Copy Successful",
         `Copied ${steps.length} plugin assembly steps to clipboard as Markdown`,
-        "success"
+        "success",
       );
     }
   } catch (error) {
@@ -119,7 +119,7 @@ export const copyPluginAssemblyStepsAsMarkdown = async (
       await showNotification(
         "Copy Failed",
         `Error copying to clipboard: ${(error as Error).message}`,
-        "error"
+        "error",
       );
     }
   }
