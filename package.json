@@ -11,11 +11,9 @@
       "url": "https://github.com/cyco77"
     }
   ],
-  "cspExceptions": {},
   "configurations": {
-    "repository": "https://raw.githubusercontent.com/cyco77/pptb-plugin-documentation-generator",
-    "website": "https://raw.githubusercontent.com/cyco77/pptb-plugin-documentation-generator",
-    "iconUrl": "https://raw.githubusercontent.com/cyco77/pptb-plugin-documentation-generator/refs/heads/main/icon/plugin-documentation_logo.png",
+    "repository": "https://github.com/cyco77/pptb-plugin-documentation-generator",
+    "website": "https://github.com/cyco77/pptb-plugin-documentation-generator",
     "readmeUrl": "https://raw.githubusercontent.com/cyco77/pptb-plugin-documentation-generator/refs/heads/main/README.md"
   },
   "license": "MIT",
