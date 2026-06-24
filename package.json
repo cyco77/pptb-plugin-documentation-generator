@@ -4,6 +4,7 @@
   "displayName": "Plugin Documentation Generator",
   "description": "A Power Platform Toolbox tool to show plugin details and generate documentation.",
   "main": "index.html",
+  "icon": "icon/plugin-documentation.svg",
   "author": "Lars Hildebrandt",
   "contributors": [
     {
