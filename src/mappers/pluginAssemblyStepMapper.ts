@@ -1,4 +1,7 @@
-import { PluginAssemblyStep } from "../types/pluginAssemblyStep";
+import {
+  PluginAssemblyStep,
+  PluginAssemblyStepImage,
+} from "../types/pluginAssemblyStep";
 
 export const mapPluginAssemblySteps = (
   rawData: Record<string, unknown>[]
@@ -7,13 +10,11 @@ export const mapPluginAssemblySteps = (
   rawData.forEach((item) => {
     const name = item["name"] as string;
     const id = item["sdkmessageprocessingstepid"] as string;
-    const mode = item[
-      "mode@OData.Community.Display.V1.FormattedValue"
-    ] as string;
+    const mode =
+      (item["mode@OData.Community.Display.V1.FormattedValue"] as string) || "";
     const rank = item["rank"] as number;
-    const stage = item[
-      "stage@OData.Community.Display.V1.FormattedValue"
-    ] as string;
+    const stage =
+      (item["stage@OData.Community.Display.V1.FormattedValue"] as string) || "";
     const filteringattributes = (item["filteringattributes"] as string) || "";
     const sdkMessage = item["sdkmessageid"] as Record<string, unknown> | null;
     const eventHandler = item["eventhandler_plugintype"] as Record<
@@ -24,10 +25,14 @@ export const mapPluginAssemblySteps = (
       string,
       unknown
     > | null;
+    const secureConfiguration = item[
+      "sdkmessageprocessingstepsecureconfigid"
+    ] as Record<string, unknown> | null;
+    const images = (item["stepImages"] as PluginAssemblyStepImage[]) || [];
 
     results.push({
       id: id,
-      name: name,
+      name: name || "",
       mode: mode,
       rank: rank,
       stage: stage,
@@ -37,11 +42,16 @@ export const mapPluginAssemblySteps = (
         ? (sdkmessagefilter["primaryobjecttypecode"] as string)
         : "",
       primaryobjecttypecodeDisplayname: sdkmessagefilter
-        ? (sdkmessagefilter[
+        ? ((sdkmessagefilter[
             "primaryobjecttypecode@OData.Community.Display.V1.FormattedValue"
-          ] as string)
+          ] as string) || "")
         : "",
       eventHandler: eventHandler ? (eventHandler["name"] as string) : "",
+      secureConfig: secureConfiguration
+        ? (secureConfiguration["secureconfig"] as string) || ""
+        : "",
+      unsecureConfig: (item["configuration"] as string) || "",
+      images,
     });
   });
 

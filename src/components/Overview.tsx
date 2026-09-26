@@ -9,10 +9,20 @@ import { Filter } from "./Filter";
 import { AssemblySteps } from "./AssemblySteps";
 import {
   exportPluginAssemblyStepsToCSV,
+  exportPluginAssemblyStepsToMarkdown,
   copyPluginAssemblyStepsAsCSV,
   copyPluginAssemblyStepsAsMarkdown,
 } from "../utils/exportUtils";
-import { Button, makeStyles, Spinner } from "@fluentui/react-components";
+import {
+  makeStyles,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  MenuPopover,
+  MenuTrigger,
+  Spinner,
+} from "@fluentui/react-components";
 import {
   ArrowDownload24Regular,
   Copy24Regular,
@@ -33,6 +43,9 @@ export const Overview: React.FC<IOverviewProps> = ({ connection }) => {
   >([]);
   const [filter, setFilter] = useState<PluginAssembly | undefined>(undefined);
   const [textFilter, setTextFilter] = useState<string>("");
+  const [stepsView, setStepsView] = useState<"list" | "tree">("list");
+  const [expandAllRequest, setExpandAllRequest] = useState(0);
+  const [collapseAllRequest, setCollapseAllRequest] = useState(0);
   const [isLoadingSteps, setIsLoadingSteps] = useState(false);
   const [isLoadingAssemblies, setIsLoadingAssemblies] = useState(false);
 
@@ -53,10 +66,6 @@ export const Overview: React.FC<IOverviewProps> = ({ connection }) => {
       justifyContent: "space-between",
       gap: "12px",
     },
-    buttonGroup: {
-      display: "flex",
-      gap: "8px",
-    },
     loadingContainer: {
       display: "flex",
       justifyContent: "center",
@@ -69,6 +78,7 @@ export const Overview: React.FC<IOverviewProps> = ({ connection }) => {
       flexDirection: "column",
       overflow: "hidden",
       minHeight: 0,
+      minWidth: 0,
     },
   });
 
@@ -149,6 +159,14 @@ export const Overview: React.FC<IOverviewProps> = ({ connection }) => {
     );
   }, [pluginAssemblySteps, filter, showNotification]);
 
+  const exportPluginAssemblyStepsAsMarkdown = useCallback(async () => {
+    await exportPluginAssemblyStepsToMarkdown(
+      pluginAssemblySteps,
+      filter,
+      showNotification
+    );
+  }, [pluginAssemblySteps, filter, showNotification]);
+
   const filteredPluginAssemblySteps = React.useMemo(() => {
     if (!textFilter) {
       return pluginAssemblySteps;
@@ -162,7 +180,16 @@ export const Overview: React.FC<IOverviewProps> = ({ connection }) => {
         step.stage?.toLowerCase().includes(searchTerm) ||
         step.rank?.toString().includes(searchTerm) ||
         step.eventHandler?.toLowerCase().includes(searchTerm) ||
-        step.filteringattributes?.toLowerCase().includes(searchTerm)
+        step.filteringattributes?.toLowerCase().includes(searchTerm) ||
+        step.primaryobjecttypecodeDisplayname?.toLowerCase().includes(searchTerm) ||
+        step.secureConfig?.toLowerCase().includes(searchTerm) ||
+        step.unsecureConfig?.toLowerCase().includes(searchTerm) ||
+        step.images?.some(
+          (image) =>
+            image.name.toLowerCase().includes(searchTerm) ||
+            image.entityAlias.toLowerCase().includes(searchTerm) ||
+            image.attributes.toLowerCase().includes(searchTerm)
+        )
       );
     });
   }, [pluginAssemblySteps, textFilter]);
@@ -204,33 +231,55 @@ export const Overview: React.FC<IOverviewProps> = ({ connection }) => {
               onTextFilterChanged={(searchText: string) => {
                 setTextFilter(searchText);
               }}
+              view={stepsView}
+              onViewChange={setStepsView}
+              onExpandAll={() => setExpandAllRequest((request) => request + 1)}
+              onCollapseAll={() =>
+                setCollapseAllRequest((request) => request + 1)
+              }
             />
-            <div className={styles.buttonGroup}>
-              <Button
-                appearance="secondary"
-                icon={<Copy24Regular />}
-                onClick={copyToClipboardAsCSV}
-                disabled={!filter || filteredPluginAssemblySteps.length === 0}
-              >
-                Copy CSV
-              </Button>
-              <Button
-                appearance="secondary"
-                icon={<DocumentTable24Regular />}
-                onClick={copyToClipboardAsMarkdown}
-                disabled={!filter || filteredPluginAssemblySteps.length === 0}
-              >
-                Copy Markdown
-              </Button>
-              <Button
-                appearance="primary"
-                icon={<ArrowDownload24Regular />}
-                onClick={exportPluginAssemblySteps}
-                disabled={!filter || pluginAssemblySteps.length === 0}
-              >
-                Export
-              </Button>
-            </div>
+            <Menu>
+              <MenuTrigger disableButtonEnhancement>
+                <MenuButton
+                  appearance="primary"
+                  disabled={!filter || filteredPluginAssemblySteps.length === 0}
+                  aria-label="Copy and export options"
+                  menuIcon={null}
+                >
+                  ...
+                </MenuButton>
+              </MenuTrigger>
+              <MenuPopover>
+                <MenuList>
+                  <MenuItem
+                    icon={<Copy24Regular />}
+                    onClick={copyToClipboardAsCSV}
+                  >
+                    Copy CSV
+                  </MenuItem>
+                  <MenuItem
+                    icon={<DocumentTable24Regular />}
+                    onClick={copyToClipboardAsMarkdown}
+                  >
+                    Copy Markdown
+                  </MenuItem>
+                  <MenuItem
+                    icon={<ArrowDownload24Regular />}
+                    disabled={pluginAssemblySteps.length === 0}
+                    onClick={exportPluginAssemblySteps}
+                  >
+                    Export CSV
+                  </MenuItem>
+                  <MenuItem
+                    icon={<DocumentTable24Regular />}
+                    disabled={pluginAssemblySteps.length === 0}
+                    onClick={exportPluginAssemblyStepsAsMarkdown}
+                  >
+                    Export Markdown
+                  </MenuItem>
+                </MenuList>
+              </MenuPopover>
+            </Menu>
           </div>
         </div>
       )}
@@ -242,7 +291,12 @@ export const Overview: React.FC<IOverviewProps> = ({ connection }) => {
       ) : (
         pluginAssemblySteps.length > 0 && (
           <div className={styles.stepsSection}>
-            <AssemblySteps items={filteredPluginAssemblySteps} />
+            <AssemblySteps
+              items={filteredPluginAssemblySteps}
+              view={stepsView}
+              expandAllRequest={expandAllRequest}
+              collapseAllRequest={collapseAllRequest}
+            />
           </div>
         )
       )}

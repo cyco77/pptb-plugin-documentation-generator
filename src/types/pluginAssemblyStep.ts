@@ -9,4 +9,16 @@ export type PluginAssemblyStep = {
   eventHandler: string;
   primaryobjecttypecode: string;
   primaryobjecttypecodeDisplayname: string;
+  secureConfig: string;
+  unsecureConfig: string;
+  images: PluginAssemblyStepImage[];
+};
+
+export type PluginAssemblyStepImage = {
+  id: string;
+  name: string;
+  entityAlias: string;
+  imageType: string;
+  messagePropertyName: string;
+  attributes: string;
 };
