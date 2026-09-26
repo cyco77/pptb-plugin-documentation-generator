@@ -12,11 +12,49 @@ export const loadPluginAssemblies = async (): Promise<PluginAssembly[]> => {
 };
 
 export const loadPluginSdkSteps = async (pluginAssemblyId: string) => {
-  let url = `sdkmessageprocessingsteps?$select=filteringattributes,mode,name,rank,stage&$expand=eventhandler_plugintype($select=name,typename),sdkmessageid($select=name),sdkmessagefilterid($select=name,primaryobjecttypecode)&$filter=(eventhandler_plugintype/_pluginassemblyid_value eq ${pluginAssemblyId}) and (sdkmessageid/sdkmessageid ne null)`;
+  const url = `sdkmessageprocessingsteps?$select=sdkmessageprocessingstepid,configuration,filteringattributes,mode,name,rank,stage&$expand=eventhandler_plugintype($select=name,typename),sdkmessageid($select=name),sdkmessagefilterid($select=name,primaryobjecttypecode),sdkmessageprocessingstepsecureconfigid($select=secureconfig)&$filter=(eventhandler_plugintype/_pluginassemblyid_value eq ${pluginAssemblyId}) and (sdkmessageid/sdkmessageid ne null)`;
 
   const allRecords = await loadAllData(url);
+  const imagesByStep = new Map<string, Record<string, unknown>[]>();
+  const stepIds = allRecords
+    .map((step) => step["sdkmessageprocessingstepid"] as string)
+    .filter(Boolean);
 
-  return mapPluginAssemblySteps(allRecords);
+  for (let index = 0; index < stepIds.length; index += 25) {
+    const stepIdBatch = stepIds.slice(index, index + 25);
+    const imageFilter = stepIdBatch
+      .map((id) => `_sdkmessageprocessingstepid_value eq ${id}`)
+      .join(" or ");
+    const imageRecords = await loadAllData(
+      `sdkmessageprocessingstepimages?$select=sdkmessageprocessingstepimageid,_sdkmessageprocessingstepid_value,name,entityalias,imagetype,messagepropertyname,attributes&$filter=${imageFilter}`
+    );
+
+    imageRecords.forEach((image) => {
+      const stepId = image["_sdkmessageprocessingstepid_value"] as string;
+      const stepImages = imagesByStep.get(stepId) || [];
+      stepImages.push(image);
+      imagesByStep.set(stepId, stepImages);
+    });
+  }
+
+  const recordsWithImages = allRecords.map((step) => {
+    const stepId = step["sdkmessageprocessingstepid"] as string;
+    const stepImages = (imagesByStep.get(stepId) || []).map((image) => ({
+      id: image["sdkmessageprocessingstepimageid"] as string,
+      name: (image["name"] as string) || "",
+      entityAlias: (image["entityalias"] as string) || "",
+      imageType:
+        (image[
+          "imagetype@OData.Community.Display.V1.FormattedValue"
+        ] as string) || "",
+      messagePropertyName: (image["messagepropertyname"] as string) || "",
+      attributes: (image["attributes"] as string) || "",
+    }));
+
+    return { ...step, stepImages };
+  });
+
+  return mapPluginAssemblySteps(recordsWithImages);
 };
 
 const loadAllData = async (fullUrl: string) => {
